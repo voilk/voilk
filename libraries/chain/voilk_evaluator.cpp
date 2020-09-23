@@ -2287,11 +2287,18 @@ void feed_publish_evaluator::do_apply( const feed_publish_operation& o )
    if( _db.has_hardfork( VOILK_HARDFORK_0_20__409 ) )
       FC_ASSERT( is_asset_type( o.exchange_rate.base, VSD_SYMBOL ) && is_asset_type( o.exchange_rate.quote, VOILK_SYMBOL ),
             "Price feed must be a VSD/VOILK price" );
+   // Since VSD to VOILK conversion is removed, aka both assets are de-coupled.
+   // It is not allowed for witnesses to change this feed price anymore.
+
+   price exchange_rate_fixed;
+   exchange_rate_fixed.base = asset(int64_t( 1000 ), VSD_SYMBOL);
+   exchange_rate_fixed.quote = asset(int64_t( 1000 ), VOILK_SYMBOL);
+   // Instead just use the fixed prive of 1.000 VSD : 1:000 VOILK
 
    const auto& witness = _db.get_witness( o.publisher );
    _db.modify( witness, [&]( witness_object& w )
    {
-      w.vsd_exchange_rate = o.exchange_rate;
+      w.vsd_exchange_rate = exchange_rate_fixed;//o.exchange_rate;
       w.last_vsd_exchange_update = _db.head_block_time();
    });
 }

@@ -2007,8 +2007,34 @@ namespace detail
       if( !hist.current_median_history.is_null() ) pot = pot * hist.current_median_history;
 
       u256 total_r2 = 0;
-      if( _db.has_hardfork( VOILK_HARDFORK_0_17__774 ) )
-         total_r2 = chain::util::to256( _db.get_reward_fund( _db.get_comment( d.author, d.permlink ) ).recent_claims );
+
+      /// correctly calculate total_r2 value
+      /// recent claims get added, to reward fund, only when it is cashout time
+
+      const auto& cidx        = _db.get_index< comment_index >().indices().get< by_cashout_time >();
+
+      auto current = cidx.begin();
+      uint128_t recent_claims_cache;
+      //  add all rshares about to be cashed out to the reward funds. This ensures equal satoshi per rshare payment
+      if( _db.has_hardfork( VOILK_HARDFORK_0_17__771 ) )
+      {
+         while( current != cidx.end() && current->cashout_time < fc::time_point_sec::maximum() )
+         {
+            if( current->net_rshares > 0 )
+            {
+               const auto& rf = _db.get_reward_fund( *current );
+               recent_claims_cache += util::evaluate_reward_curve( current->net_rshares.value, rf.author_reward_curve, rf.content_constant );
+            }
+
+            ++current;
+         }
+
+         total_r2 = total_r2 = chain::util::to256(recent_claims_cache);
+      }
+
+      // if( _db.has_hardfork( VOILK_HARDFORK_0_17__774 ) )
+      //    total_r2 = chain::util::to256( _db.get_reward_fund( _db.get_comment( d.author, d.permlink ) ).recent_claims );
+     
       else
          total_r2 = chain::util::to256( props.total_reward_shares2 );
 

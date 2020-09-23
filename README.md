@@ -3,12 +3,10 @@
 Voilk is a Delegated Proof of Stake blockchain that uses a "Proof of Brain" social consensus algorithm for token allocation.
 
   - Currency symbol VOILK and VSD.
-<<<<<<< HEAD
   - VOILK is created via the social consensus algorithm and users are free to trade their stable VSD currency with it via the `internal market` also participate in mining/minting process of it.
-=======
-  - Create VSD on demand, allows the company to peg VSD with USD, and manage it
+  - Create VSD on demand, allows the company to peg VSD with USD, and manage it (only @voilk can create VSD)
+  - Create accounts only via the @voilk, no other account can create accounts.
   - VOILK is however, created via the social consensus algorithm and users are free to trade their stable VSD currency with it via the `internal market` also participate in mining/minting process of it.
->>>>>>> 7c25355e06ae4bbec22e856c0c338956dc3a5f8a
   - 1.032 VOILK block reward which narrows down to 0.100 VOILK over 20 years
   - 85% of the reward goes to "Proof of Brain" social consensus algorithm.
     - 25% to curators (people who choose with their likes/upvotes which content is good)
@@ -19,12 +17,8 @@ Voilk is a Delegated Proof of Stake blockchain that uses a "Proof of Brain" soci
   
 Premine option available
   - 10 Million VOILK premine
-<<<<<<< HEAD
   - 10 Million VSD premine (the amount does not matter here, since it can be produced on demand)
-
-=======
-  - Premine of VSD does not matter, since it always will be pegged with the USD, you can get 1 USD against your 1 VSD and vice versa.
->>>>>>> 7c25355e06ae4bbec22e856c0c338956dc3a5f8a
+  - Premine of VSD does not matter, since it always will be pegged with the USD, you can get 1 USD against your 1 VSD and vice versa from the company/person/organization who runs the project.
 
 # No Support & No Warranty
 
@@ -108,3 +102,7 @@ echo  1000 | sudo tee /proc/sys/vm/dirty_expire_centisecs
 echo    80 | sudo tee /proc/sys/vm/dirty_ratio
 echo 30000 | sudo tee /proc/sys/vm/dirty_writeback_centisecs
 ```
+
+# Credits
+
+Even though the code was changed (it was re-purposed) but it was originally created by the `STEEM` developers, so most of the credit goes to them :)
